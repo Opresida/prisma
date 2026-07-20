@@ -1,0 +1,19 @@
+# Dependências / build
+node_modules/
+dist/
+.cache/
+
+# Netlify
+.netlify/
+
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

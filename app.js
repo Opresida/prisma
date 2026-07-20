@@ -265,7 +265,7 @@
       '<p class="lede">Algumas perguntas cuidadosas, uma tela de cada vez. No fim, você recebe um mapa dos sinais e o caminho para uma avaliação de verdade.</p>'+
       '<div class="facts">'+
         fact("Isto não confirma autismo.","Nenhum questionário diagnostica. Só uma avaliação profissional confirma ou descarta.")+
-        fact("Perguntas com base científica.","Usamos instrumentos validados: AQ-10 (adultos) e M-CHAT-R/F (crianças).")+
+        fact("Perguntas com base científica.","Usamos questionários validados cientificamente, específicos para cada idade — de bebês a adultos.")+
         fact("Fica só no seu aparelho.","Nada é enviado. Você responde sem pressa, sem cadastro e sem julgamento.")+
       '</div>'+
       '<button class="btn" data-a="start">Começar &nbsp;→</button>'+

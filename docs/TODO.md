@@ -6,7 +6,7 @@ Atualizar após cada funcionalidade aprovada. Datas em formato absoluto.
 
 - [ ] **Itens oficiais do M-CHAT-R/F** — substituir os itens *adaptados* da criança pela redação validada em PT-BR (SBP), mantendo a lógica de risco. (`CANON.md` §4)
 - [ ] **Revisão profissional** do conteúdo clínico e dos textos de encaminhamento. (`CANON.md` §8)
-- [ ] **Domínio real** — atualizar `og:url`/`og:image`/`canonical` em `index.html` (hoje: placeholder `prisma-idasam.netlify.app`).
+- [x] **Domínio Netlify** — `og:url`/`og:image`/`canonical` apontam para `prismatea.netlify.app` (2026-07-20). Atualizar se migrar para domínio próprio.
 - [ ] **Página/《aviso》 de privacidade** explícita (o que é coletado = nada é enviado) e termos de uso.
 
 ## 🟡 Próximas features

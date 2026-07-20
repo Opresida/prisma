@@ -72,7 +72,7 @@ netlify dev
 
 O [`netlify.toml`](netlify.toml) já está pronto: sem comando de build, `publish = "."`, headers de segurança (CSP) e cache. Basta conectar o repositório `Opresida/prisma` no Netlify (ou `netlify deploy --prod`).
 
-**Após o deploy:** atualize o domínio real em `index.html` (tags `og:url` e `og:image`) e em `netlify.toml` se necessário. Hoje aponta para o placeholder `https://prisma-idasam.netlify.app`.
+**Domínio:** as tags `og:url` / `og:image` / `canonical` em `index.html` apontam para `https://prismatea.netlify.app` (subdomínio Netlify). Se migrar para domínio próprio, atualize-as e regenere nada mais.
 
 ## Estrutura
 

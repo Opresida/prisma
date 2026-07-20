@@ -8,7 +8,7 @@ _Foto do estado do projeto. Atualizar ao fim de cada sessão relevante._
 
 - **Local:** `C:\Users\user\prisma`
 - **Repositório:** https://github.com/Opresida/prisma.git
-- **Deploy:** Netlify (site estático, sem build) — placeholder `https://prisma-idasam.netlify.app`
+- **Deploy:** Netlify (site estático, sem build) — `https://prismatea.netlify.app`
 - **Stack:** HTML + CSS + JS vanilla, zero build, local-first
 - **Time:** Humberto + Claude
 
@@ -35,7 +35,7 @@ python -m http.server 8899   # → http://127.0.0.1:8899
 **Pendente (ver `TODO.md`):**
 - Itens oficiais validados PT-BR do M-CHAT-R/F.
 - Revisão profissional do conteúdo.
-- Domínio real (atualizar `og:url`/`og:image`).
+- Domínio próprio (se sair do subdomínio Netlify, atualizar `og:url`/`og:image`).
 - Telemedicina de verdade (parceria + consentimento + CFM).
 
 ## Decisões-chave

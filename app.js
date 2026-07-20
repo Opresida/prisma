@@ -104,10 +104,62 @@
     ]
   };
 
-  var INSTR = {adult:ADULT, child:CHILD};
+  // Aprofundamento do adulto: camuflagem (masking). Lançado a partir do resultado do AQ-10.
+  var CATQ = {
+    key:"catq",
+    title:"Camuflagem — CAT-Q",
+    metaProfile:"Adulto — camuflagem (masking)",
+    metaInstr:"CAT-Q (camuflagem)",
+    scale:"likert7",
+    options:[
+      {label:"Discordo totalmente", v:"1"},
+      {label:"Discordo", v:"2"},
+      {label:"Discordo um pouco", v:"3"},
+      {label:"Neutro", v:"4"},
+      {label:"Concordo um pouco", v:"5"},
+      {label:"Concordo", v:"6"},
+      {label:"Concordo totalmente", v:"7"}
+    ],
+    source:"Adaptado do CAT-Q (Hull et al., 2018) para o protótipo; redação oficial em português a validar.",
+    domains:{comp:"Compensação", mask:"Máscara", assim:"Assimilação"},
+    steps:[
+      "Leve ESTE resultado junto com o do AQ-10 a um profissional — a combinação conta muito.",
+      "Camuflar cansa: se você se reconhece aqui, cuidar do esgotamento e da ansiedade também importa.",
+      "Diagnóstico tardio é comum em quem camufla bem (em especial mulheres) — buscar avaliação nunca é tarde."
+    ],
+    q:[
+      {t:"Quando interajo com alguém, copio de propósito a linguagem corporal ou as expressões faciais da pessoa.", d:"comp"},
+      {t:"Monitoro minha linguagem corporal e expressões faciais para parecer relaxado(a).", d:"mask"},
+      {t:"Raramente sinto necessidade de \"fazer um teatro\" para atravessar uma situação social.", d:"assim", rev:true},
+      {t:"Desenvolvi um \"roteiro\" para seguir em situações sociais.", d:"comp"},
+      {t:"Repito frases que ouvi outras pessoas dizerem, exatamente do mesmo jeito que ouvi.", d:"comp"},
+      {t:"Ajusto minha linguagem corporal e expressões faciais para parecer interessado(a) na pessoa com quem estou.", d:"mask"},
+      {t:"Em situações sociais, sinto que estou \"atuando\" em vez de ser eu mesmo(a).", d:"assim"},
+      {t:"Nas minhas interações, uso comportamentos que aprendi observando outras pessoas interagirem.", d:"comp"},
+      {t:"Estou sempre pensando na impressão que causo nos outros.", d:"mask"},
+      {t:"Preciso do apoio de outras pessoas para conseguir socializar.", d:"assim"},
+      {t:"Ensaio minhas expressões faciais e linguagem corporal para garantir que pareçam naturais.", d:"comp"},
+      {t:"Não sinto necessidade de fazer contato visual com os outros se não quiser.", d:"mask", rev:true},
+      {t:"Tenho que me forçar a interagir com as pessoas quando estou em situações sociais.", d:"assim"},
+      {t:"Já tentei melhorar meu entendimento de habilidades sociais observando outras pessoas.", d:"comp"},
+      {t:"Monitoro minha linguagem corporal e expressões faciais para parecer interessado(a) na pessoa com quem estou.", d:"mask"},
+      {t:"Em situações sociais, procuro formas de evitar interagir com os outros.", d:"assim"},
+      {t:"Já pesquisei as \"regras\" das interações sociais para melhorar minhas próprias habilidades.", d:"comp"},
+      {t:"Estou sempre atento(a) à impressão que causo nos outros.", d:"mask"},
+      {t:"Sinto-me livre para ser eu mesmo(a) quando estou com outras pessoas.", d:"assim", rev:true},
+      {t:"Aprendo como as pessoas usam o corpo e o rosto para interagir assistindo TV, filmes ou lendo ficção.", d:"comp"},
+      {t:"Ajusto minha linguagem corporal e expressões faciais para parecer relaxado(a).", d:"mask"},
+      {t:"Quando converso com outras pessoas, sinto que a conversa flui naturalmente.", d:"assim", rev:true},
+      {t:"Passei tempo aprendendo habilidades sociais em séries e filmes, e tento usá-las nas minhas interações.", d:"comp"},
+      {t:"Nas interações sociais, não presto atenção no que meu rosto ou meu corpo estão fazendo.", d:"mask", rev:true},
+      {t:"Em situações sociais, sinto que estou fingindo ser \"normal\".", d:"assim"}
+    ]
+  };
+
+  var INSTR = {adult:ADULT, child:CHILD, catq:CATQ};
 
   /* ---------- State ---------- */
-  var st = {screen:"welcome", profile:null, i:0, raw:[]};
+  var st = {screen:"welcome", profile:null, i:0, raw:[], aq:null};
   function inst(){ return INSTR[st.profile]; }
 
   function scored(item, v){
@@ -129,6 +181,16 @@
     return {total:total, n:q.length, band:band, dom:dom};
   }
   function ratioColor(r){ return r<0.34 ? "#5c8f77" : (r<0.67 ? "#b3893c" : "#b56a54"); }
+  function catqScore(){
+    var comp=0,mask=0,assim=0;
+    CATQ.q.forEach(function(it,idx){
+      var v=parseInt(st.raw[idx]||"4",10);
+      if(it.rev) v=8-v;
+      if(it.d==="comp") comp+=v; else if(it.d==="mask") mask+=v; else assim+=v;
+    });
+    var total=comp+mask+assim;
+    return {comp:comp,mask:mask,assim:assim,total:total,compMax:63,maskMax:56,assimMax:56,camouflaging:total>=100};
+  }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
   function today(){
     try{ return new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"}); }
@@ -175,6 +237,25 @@
   }
 
   function screenIntro(){
+    if(st.profile==="catq"){
+      return '<div class="fade">'+
+        '<p class="eyebrow">Aprofundamento · Camuflagem</p>'+
+        '<h2 style="font-size:1.7rem;margin:10px 0 14px">Sobre a camuflagem</h2>'+
+        '<div class="card">'+
+          '<p style="margin-bottom:14px">Camuflagem (<em>masking</em>) é o esforço de "disfarçar" traços autistas para se encaixar — copiar gestos, ensaiar falas, forçar contato visual. É cansativo e muito comum em quem recebe diagnóstico tarde.</p>'+
+          '<ul style="margin:0;padding-left:20px;color:var(--ink-soft);line-height:1.9">'+
+            '<li>São 25 frases, com uma escala de 7 pontos.</li>'+
+            '<li>Responda pensando em como você é na maior parte do tempo.</li>'+
+            '<li>Cerca de 5 minutos. Sem pressa, dá pra voltar.</li>'+
+          '</ul>'+
+          '<div class="note">'+esc(CATQ.source)+'</div>'+
+        '</div>'+
+        '<div class="row" style="margin-top:20px">'+
+          '<button class="btn ghost small" data-a="catqBack">← Voltar</button>'+
+          '<button class="btn" data-a="begin" style="flex:1">Começar</button>'+
+        '</div>'+
+      '</div>';
+    }
     var it=inst();
     var perProfile = st.profile==="adult"
       ? "Para cada frase, diga o quanto ela combina com você. Não existe resposta certa ou errada — só o que é verdadeiro para você."
@@ -221,6 +302,7 @@
   }
 
   function screenResult(){
+    if(st.profile==="catq") return screenResultCatq();
     var it=inst(), r=compute(), b=r.band;
     var maprows=Object.keys(it.domains).map(function(k){
       var d=r.dom[k], ratio=d.n?d.c/d.n:0, w=Math.max(ratio*100, d.c>0?8:2);
@@ -246,6 +328,7 @@
       '<h3 style="font-size:1.05rem;margin:24px 0 12px">Próximos passos</h3>'+
       '<div class="steps">'+steps+'</div>'+
       '<button class="btn" style="margin-top:20px" data-a="download">⬇︎ &nbsp;Baixar resultado (PDF)</button>'+
+      (st.profile==="adult" ? DEEPEN : "")+
       '<div class="telemed">'+
         '<span class="tic" aria-hidden="true">🩺</span>'+
         '<div><h3>Atendimento com profissionais <span class="badge">Em breve</span></h3>'+
@@ -261,6 +344,62 @@
     '</div>';
   }
 
+  var DEEPEN = '<div class="telemed" style="border-style:solid;border-color:var(--primary-soft)">'+
+    '<span class="tic" aria-hidden="true">🎭</span>'+
+    '<div><h3>Aprofundar: você se camufla?</h3>'+
+    '<p>O AQ-10 mede sinais aparentes. Muita gente — em especial quem foi diagnosticada tarde — "disfarça" (camuflagem), e isso esconde os sinais. Este passo de 25 perguntas mostra o quanto.</p>'+
+    '<button class="btn small" style="margin-top:12px" data-a="deepen-catq">Fazer o teste de camuflagem →</button></div>'+
+  '</div>';
+
+  function screenResultCatq(){
+    var cs=catqScore();
+    var col = cs.camouflaging ? "var(--mid)" : "var(--calm)";
+    var subs=[
+      {k:"Compensação", v:cs.comp, m:cs.compMax, tip:"aprende e aplica estratégias sociais (observar, ensaiar, roteirizar)"},
+      {k:"Máscara", v:cs.mask, m:cs.maskMax, tip:"monitora e ajusta corpo e expressão para parecer natural ou interessado(a)"},
+      {k:"Assimilação", v:cs.assim, m:cs.assimMax, tip:"se força a agir \"normal\" e a se encaixar, muitas vezes com custo"}
+    ];
+    var top=subs.slice().sort(function(a,b){return (b.v/b.m)-(a.v/a.m);})[0];
+    var bars=subs.map(function(s){
+      var w=Math.max(Math.round(s.v/s.m*100),4);
+      return '<div class="maprow"><div class="ml"><span>'+s.k+'</span><span>'+s.v+' / '+s.m+'</span></div>'+
+        '<div class="track"><i style="width:'+w+'%;background:var(--primary)"></i></div></div>';
+    }).join("");
+    var steps=CATQ.steps.map(function(s,idx){ return '<div class="s"><span class="n">'+(idx+1)+'</span><span>'+esc(s)+'</span></div>'; }).join("");
+    var insight="";
+    if(st.aq && st.aq.total<6 && cs.camouflaging){
+      insight='<div class="note" style="border-left-color:var(--mid)"><b>Um padrão importante:</b> no AQ-10 apareceram poucos sinais aparentes, mas aqui a camuflagem é alta. Esse é justamente o perfil que costuma passar despercebido e receber diagnóstico tardio (comum em mulheres e adultos). Vale levar os <b>dois</b> resultados a um profissional.</div>';
+    }
+    var headline = cs.camouflaging ? "Você provavelmente se camufla" : "Pouca camuflagem";
+    var blurb = cs.camouflaging
+      ? ("Sua pontuação indica que você camufla traços autistas com frequência. Predomina a "+top.k.toLowerCase()+": você "+top.tip+".")
+      : "Sua pontuação indica pouca camuflagem de traços autistas.";
+    return '<div class="fade">'+
+      '<p class="eyebrow">Seu resultado · Camuflagem (CAT-Q)</p>'+
+      '<h2 style="font-size:1.7rem;margin:10px 0 16px">'+esc(headline)+'</h2>'+
+      '<div class="band" style="background:color-mix(in srgb,'+col+' 12%,var(--surface))">'+
+        '<span class="glow" style="background:'+col+'"></span>'+
+        '<div><span class="score">'+cs.total+' <small style="display:inline;font-size:.9rem;text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink-soft)">de 175 · limiar 100</small></span>'+
+        '<small style="margin-top:4px">'+(cs.camouflaging?"Acima do limiar":"Abaixo do limiar")+'</small></div>'+
+      '</div>'+
+      '<p class="lede" style="margin:16px 0 6px">'+esc(blurb)+'</p>'+
+      '<h3 style="font-size:1.05rem;margin:26px 0 4px">Como você se camufla</h3>'+
+      '<p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:4px">As três formas de camuflagem. Barras mais cheias = mais presente.</p>'+
+      '<div class="map">'+bars+'</div>'+
+      insight+
+      '<h3 style="font-size:1.05rem;margin:24px 0 12px">Próximos passos</h3>'+
+      '<div class="steps">'+steps+'</div>'+
+      '<button class="btn" style="margin-top:20px" data-a="download">⬇︎ &nbsp;Baixar resultado completo (PDF)</button>'+
+      '<p class="disclaimer"><b>Importante:</b> camuflagem não é diagnóstico. O CAT-Q descreve o quanto você disfarça traços — a confirmação de autismo só vem de avaliação profissional. Suas respostas ficaram apenas neste aparelho.</p>'+
+      '<div class="row" style="margin-top:20px">'+
+        '<button class="btn ghost small" data-a="catqBack">← Meu resultado do AQ-10</button>'+
+        '<button class="btn ghost small" data-a="restart">Refazer</button>'+
+      '</div>'+
+      '<p class="src">'+esc(CATQ.source)+'</p>'+
+      PARTNERS+
+    '</div>';
+  }
+
   var SCREENS={welcome:screenWelcome, profile:screenProfile, intro:screenIntro, quiz:screenQuiz, result:screenResult};
   function render(){
     stage.innerHTML = SCREENS[st.screen]();
@@ -269,6 +408,7 @@
 
   /* ---------- Letterhead / PDF ---------- */
   function buildLetterhead(){
+    if(st.profile==="catq") return buildLetterheadCatq();
     var it=inst(), r=compute(), b=r.band;
     var maprows=Object.keys(it.domains).map(function(k){
       var d=r.dom[k], ratio=d.n?d.c/d.n:0, w=Math.max(ratio*100, d.c>0?8:3);
@@ -317,6 +457,46 @@
       '</div>'+
     '</div>';
   }
+  function buildLetterheadCatq(){
+    var cs=catqScore(), date=today(), aq=st.aq;
+    var subrows=[
+      {k:"Compensação", v:cs.comp, m:cs.compMax},
+      {k:"Máscara", v:cs.mask, m:cs.maskMax},
+      {k:"Assimilação", v:cs.assim, m:cs.assimMax}
+    ].map(function(s){
+      var w=Math.max(Math.round(s.v/s.m*100),3);
+      return '<tr><td class="area">'+s.k+'</td><td class="bar"><div class="lh-bar"><i style="width:'+w+'%;background:#3a7d74"></i></div></td><td class="num">'+s.v+'/'+s.m+'</td></tr>';
+    }).join("");
+    var steps=CATQ.steps.map(function(s){ return '<li>'+esc(s)+'</li>'; }).join("");
+    var camColor = cs.camouflaging ? "#b3893c" : "#5c8f77";
+    var aqBlock = aq ? ('<div class="lh-result" style="border-left-color:'+aq.band.color+'"><span class="lbl">AQ-10 · '+esc(aq.band.label)+'</span><span class="sc"><b>'+aq.total+' / '+aq.n+'</b><span>sinais</span></span></div>') : "";
+    var insight = (aq && aq.total<6 && cs.camouflaging) ? '<div class="lh-warn"><b>Padrão de atenção:</b> poucos sinais aparentes no AQ-10 + camuflagem alta no CAT-Q — perfil frequentemente associado a diagnóstico tardio. Recomenda-se avaliação profissional com os dois resultados.</div>' : "";
+    return '<div class="docmodal" id="docmodal" role="dialog" aria-label="Relatório para baixar">'+
+      '<div class="docwrap"><section id="letterhead"><div class="lh-pad">'+
+        '<div class="lh-brand"><span class="lh-mark" aria-hidden="true"></span><span class="nm">Prisma</span><span class="tg">Rastreio + camuflagem</span></div>'+
+        '<div class="lh-rule" aria-hidden="true"></div>'+
+        '<h1>Rastreio de sinais e camuflagem</h1>'+
+        '<p class="lh-sub">Instrumentos de orientação — não constituem diagnóstico.</p>'+
+        '<div class="lh-meta">'+
+          '<div><div class="k">Data</div><div class="v">'+esc(date)+'</div></div>'+
+          '<div><div class="k">Perfil</div><div class="v">Adulto (autoavaliação)</div></div>'+
+          '<div><div class="k">Instrumentos</div><div class="v">AQ-10 + CAT-Q</div></div>'+
+        '</div>'+
+        aqBlock+
+        '<div class="lh-result" style="border-left-color:'+camColor+'"><span class="lbl">Camuflagem (CAT-Q)</span><span class="sc"><b>'+cs.total+' / 175</b><span>'+(cs.camouflaging?"acima do limiar 100":"abaixo do limiar 100")+'</span></span></div>'+
+        '<h2>Formas de camuflagem</h2>'+
+        '<table class="lh-map"><tbody>'+subrows+'</tbody></table>'+
+        insight+
+        '<h2>Próximos passos</h2>'+
+        '<ul class="lh-steps">'+steps+'</ul>'+
+        '<div class="lh-warn"><b>Aviso:</b> rastreio e camuflagem são orientação, não diagnóstico. Somente avaliação profissional confirma ou descarta o TEA. '+esc(CATQ.source)+'</div>'+
+        '<p class="lh-telemed">🩺 Em breve: atendimento imediato via telemedicina com profissionais capacitados, direto pelo Prisma.</p>'+
+      '</div>'+
+      '<div class="lh-foot"><div class="credit"><b>Prisma</b> — uma plataforma <b>IDASAM</b>, desenvolvida em parceria com a <b>MAZARI CORP.</b></div><div class="gen">Gerado em '+esc(date)+' · sem validade diagnóstica</div></div>'+
+      '</section></div>'+
+      '<div class="docbar"><button class="btn ghost" data-a="closedoc">Fechar</button><button class="btn" data-a="print">⬇︎ Salvar como PDF</button></div>'+
+    '</div>';
+  }
   function openDoc(){
     closeDoc();
     var wrap=document.createElement("div");
@@ -347,13 +527,15 @@
     if(a==="closedoc"){ closeDoc(); return; }
     // navigation actions
     if(a==="start"){ st.screen="profile"; }
-    else if(a==="home"){ st.screen="welcome"; st.profile=null; st.i=0; st.raw=[]; }
+    else if(a==="home"){ st.screen="welcome"; st.profile=null; st.i=0; st.raw=[]; st.aq=null; }
     else if(a==="profile"){ st.profile=el.getAttribute("data-p"); st.screen="intro"; }
     else if(a==="profileBack"){ st.screen="profile"; st.profile=null; }
     else if(a==="begin"){ st.i=0; st.raw=[]; st.screen="quiz"; }
     else if(a==="answer"){ st.raw[st.i]=el.getAttribute("data-v"); render(); return; }
     else if(a==="prev"){ if(st.i>0){ st.i--; } else { st.screen="intro"; } }
-    else if(a==="next"){ if(!st.raw[st.i]) return; if(st.i<inst().q.length-1){ st.i++; } else { st.screen="result"; } }
+    else if(a==="next"){ if(!st.raw[st.i]) return; if(st.i<inst().q.length-1){ st.i++; } else { if(st.profile==="adult"){ st.aq=compute(); st.aq.raw=st.raw.slice(); } st.screen="result"; } }
+    else if(a==="deepen-catq"){ st.profile="catq"; st.i=0; st.raw=[]; st.screen="intro"; }
+    else if(a==="catqBack"){ st.profile="adult"; st.raw=(st.aq&&st.aq.raw)?st.aq.raw.slice():[]; st.screen="result"; }
     else if(a==="restart"){ st.i=0; st.raw=[]; st.screen="quiz"; }
     else return;
     render();

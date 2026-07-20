@@ -19,7 +19,7 @@ Tom calmo, direto, sem alarme e sem dramatização. Sem idiomas, ironia ou duplo
 ## 4. Fidelidade científica dos instrumentos
 
 Usar apenas instrumentos validados (hoje: AQ-10 para adultos; M-CHAT-R/F para 16–30 meses) com sua **pontuação oficial**. Não inventar itens nem cortes.
-**Pendência crítica:** os itens da criança estão *adaptados para protótipo*; antes de produção, substituir pela redação **oficial validada em português** (SBP), preservando a lógica de risco (itens 2, 5 e 12 pontuam no "Sim"; demais no "Não").
+**Pendência crítica:** os itens da criança (M-CHAT-R/F) e os do CAT-Q estão *adaptados para protótipo*; antes de produção, substituir pela redação **oficial validada em português** — M-CHAT pela SBP (preservando a lógica de risco: itens 2, 5 e 12 pontuam no "Sim"; demais no "Não") e CAT-Q por tradução validada (a pontuação, o limiar 100 e os itens reversos 3/12/19/22/24 já são os oficiais).
 
 ## 5. Local-first / LGPD
 

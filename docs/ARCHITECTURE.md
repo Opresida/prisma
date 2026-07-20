@@ -47,6 +47,15 @@ Adicionar um instrumento = adicionar um objeto e roteá-lo em `INSTR`. Nada de t
 
 `compute()` retorna `{ total, n, band, dom }`, onde `dom[area] = {c, n}` alimenta o **mapa por área**. A faixa (`band`) é a primeira cujo `max` cobre o total.
 
+## Aprofundamento do adulto (camuflagem / CAT-Q)
+
+Depois do resultado do AQ-10, o adulto pode abrir um aprofundamento opcional: o **CAT-Q** (25 itens, escala de 7 pontos, `scale:"likert7"`), que mede camuflagem (_masking_) em 3 subescalas (Compensação/Máscara/Assimilação). É um instrumento como os outros (`INSTR.catq`), mas com resultado e papel timbrado próprios.
+
+- `catqScore()` soma por subescala, invertendo os itens reversos (3, 12, 19, 22, 24 → `8 - v`); limiar de camuflagem = **100** (de 25–175).
+- Ao terminar o AQ-10, o resultado é fotografado em `st.aq` (`{total, n, band, raw}`), o que permite: (a) o cruzamento "poucos sinais aparentes + camuflagem alta = perfil de diagnóstico tardio"; (b) voltar ao resultado do AQ-10 (`catqBack` restaura `st.raw`); (c) um **PDF combinado** (AQ-10 + CAT-Q) via `buildLetterheadCatq()`.
+
+RAADS-R (80 itens) plugará no mesmo padrão quando entrar.
+
 ## Papel timbrado (PDF)
 
 `buildLetterhead()` monta um documento A4 (`#letterhead`) com cores **fixas claras** (independe do tema). "Baixar resultado (PDF)" mostra o spinner brevemente, abre o documento num modal e o botão "Salvar como PDF" chama `window.print()`.

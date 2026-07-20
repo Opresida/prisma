@@ -25,8 +25,9 @@ python -m http.server 8899   # → http://127.0.0.1:8899
 **Pronto:**
 - App completo: boas-vindas → perfil → intro → questionário (1 pergunta/tela) → resultado (mapa por área + próximos passos).
 - Quatro instrumentos: **AQ-10** (adulto, fiel), **M-CHAT-R/F** (bebê 16–30m), **CAST** (criança 4–11) e **CAT-Q** (camuflagem, aprofundamento do adulto). Itens de M-CHAT/CAST/CAT-Q *adaptados p/ protótipo* + scoring/cortes oficiais.
+- **Aprofundamento do adulto:** CAT-Q (camuflagem) após o AQ-10 → PDF combinado + alerta "poucos sinais + camuflagem alta = diagnóstico tardio".
 - **Papel timbrado** em PDF (via impressão) com rodapé IDASAM + MAZARI CORP.
-- **Spinner** de boot (reaproveitado ao gerar PDF).
+- **Spinner** de boot ~4s (reaproveitado ao gerar PDF).
 - Card **telemedicina "em breve"**.
 - **Ajustes sensoriais** (reduzir movimento / texto maior) + temas claro/escuro.
 - Favicon, `manifest.json`, **OG 1200×630** (`assets/og-image.png`), `netlify.toml` + CSP.

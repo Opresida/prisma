@@ -35,3 +35,4 @@ Atualizar após cada funcionalidade aprovada. Datas em formato absoluto.
 ## Histórico
 
 - **2026-07-20** — Repositório criado. App refatorado (index/styles/app), papel timbrado (print) com rodapé IDASAM+MAZARI, spinner de boot, card telemedicina "em breve", favicon, manifest, OG 1200×630, `netlify.toml` + CSP, documentação canônica. Headline: "Entenda possíveis sinais de autismo, sem pressa nem julgamento."
+- **2026-07-20** — Aprofundamento do adulto: **CAT-Q** (camuflagem) + PDF combinado e cruzamento com o AQ-10. Faixa **4–11 (CAST)** como 3º perfil (SCQ preterido). OG/canonical → `prismatea.netlify.app`. Spinner de boot fixado em **~4s**. Docs canônicos revisados (CLAUDE.md, CANON, CONTEXT, ARCHITECTURE, PROJECT_CONTEXT, README).

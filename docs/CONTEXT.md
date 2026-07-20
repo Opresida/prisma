@@ -14,9 +14,10 @@ Prisma junta três coisas que hoje raramente andam juntas:
 
 ## Público (multi-perfil)
 
-- **Adulto em autoexploração** — mercado grande e mal atendido: diagnóstico tardio, mulheres, camuflagem (_masking_). Autoavaliação, autopago, menor atrito.
-- **Responsável avaliando criança pequena (16–30 meses)** — rastreio precoce; altíssimo valor social; quanto antes o apoio, melhor.
-- _Futuro:_ crianças 4–11 (SCQ); aprofundamento adulto (RAADS-R, CAT-Q).
+- **Adulto em autoexploração** — mercado grande e mal atendido: diagnóstico tardio, mulheres, camuflagem (_masking_). Autoavaliação, autopago, menor atrito. Tem um **aprofundamento de camuflagem (CAT-Q)** opcional após o rastreio.
+- **Responsável avaliando bebê (16–30 meses)** — rastreio precoce (M-CHAT-R/F); altíssimo valor social; quanto antes o apoio, melhor.
+- **Responsável avaliando criança em idade escolar (4–11 anos)** — CAST (gratuito, Cambridge); fecha o vão entre bebê e adulto.
+- _Futuro:_ RAADS-R (aprofundamento longo do adulto).
 
 ## Por que estas decisões
 

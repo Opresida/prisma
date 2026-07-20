@@ -37,6 +37,8 @@ Veja as regras inegociáveis em [`docs/CANON.md`](docs/CANON.md).
 5. **Papel timbrado** — botão "Baixar resultado (PDF)" gera um relatório em papel timbrado (via impressão → salvar como PDF) com o rodapé de parceria IDASAM + MAZARI CORP.
 6. **Local-first** — as respostas ficam **apenas no aparelho**. Nada é enviado.
 
+> **Aprofundamento (adulto):** depois do AQ-10, dá para fazer o **CAT-Q** (camuflagem). O app cruza os dois resultados e gera um PDF combinado — o padrão *poucos sinais aparentes + camuflagem alta* costuma indicar diagnóstico tardio (comum em mulheres e adultos).
+
 ## Instrumentos e pontuação
 
 | Perfil | Instrumento | Itens | Faixas |

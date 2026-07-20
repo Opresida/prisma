@@ -16,36 +16,39 @@ Navegador
 Um objeto de estado único e uma máquina de telas:
 
 ```js
-st = { screen, profile, i, raw }
+st = { screen, profile, i, raw, aq }
 // screen ∈ welcome → profile → intro → quiz → result
+// profile ∈ adult | child (M-CHAT) | child2 (CAST) | catq (aprofundamento)
+// aq = foto do resultado do AQ-10 (para o cruzamento e o PDF combinado)
 ```
 
 `render()` injeta o HTML da tela atual em `#stage`. Cliques são tratados por **um** listener delegado (`data-a="..."`). Sem router, sem virtual DOM.
 
 ## Modelo de instrumento
 
-Cada instrumento (`ADULT`, `CHILD`) é um objeto declarativo:
+Cada instrumento (`ADULT`, `CHILD`, `CAST`, `CATQ`) é um objeto declarativo:
 
 ```js
 {
-  scale: "agree" | "yesno",     // tipo de resposta
-  options: [...],               // rótulos das respostas
-  domains: { chave: "Rótulo" }, // áreas para o mapa
-  q: [ { t, d, s|risk } ],      // perguntas + domínio + direção de pontuação
+  scale: "agree" | "yesno" | "likert7", // tipo de resposta
+  options: [...],                       // rótulos das respostas
+  domains: { chave: "Rótulo" },         // áreas para o mapa
+  q: [ { t, d, s|risk|rev } ],          // perguntas + domínio + direção de pontuação
   bands: [ { max, key, label, color, blurb } ],
-  steps: [ ... ]                // próximos passos
+  steps: [ ... ]                        // próximos passos
 }
 ```
 
-Adicionar um instrumento = adicionar um objeto e roteá-lo em `INSTR`. Nada de tocar na engine.
+Adicionar um instrumento = adicionar um objeto e roteá-lo em `INSTR` (`adult`/`child`/`child2`/`catq`). Nada de tocar na engine. **CAST** (`child2`, `yesno`) e **M-CHAT** (`child`) reusam a tela de resultado padrão e o `buildLetterhead()`; **CAT-Q** (`catq`, `likert7`) é o único com resultado e papel timbrado próprios.
 
 ## Pontuação
 
 `scored(item, v)` decide se uma resposta "pontua":
 - **AQ-10 (`agree`)** — concordar pontua em itens `s:"agree"`, discordar pontua em itens `s:"disagree"`.
 - **M-CHAT-R/F (`yesno`)** — pontua quando a resposta = `risk` do item (itens 2, 5, 12 → "Sim"; demais → "Não").
+- **CAST (`yesno`)** — criança 4–11; mesma lógica de risco por item; corte de encaminhamento **≥15**.
 
-`compute()` retorna `{ total, n, band, dom }`, onde `dom[area] = {c, n}` alimenta o **mapa por área**. A faixa (`band`) é a primeira cujo `max` cobre o total.
+`compute()` retorna `{ total, n, band, dom }`, onde `dom[area] = {c, n}` alimenta o **mapa por área**. A faixa (`band`) é a primeira cujo `max` cobre o total. (O CAT-Q não usa `compute()` — tem `catqScore()` próprio.)
 
 ## Aprofundamento do adulto (camuflagem / CAT-Q)
 
@@ -66,7 +69,7 @@ O `@media print` em `styles.css` oculta tudo, exibe só `#letterhead`, aplica `p
 
 ## Spinner / boot
 
-`#boot` cobre a tela no carregamento e some no `load` (respeitando `prefers-reduced-motion`). É reaproveitado como "Preparando seu documento…" ao gerar o PDF. O anel usa `conic-gradient` do espectro com máscara radial.
+`#boot` cobre a tela e some **~4s** após o carregamento (fallback de 4s caso o evento `load` não dispare), respeitando `prefers-reduced-motion`. É reaproveitado como "Preparando seu documento…" ao gerar o PDF. O anel usa `conic-gradient` do espectro com máscara radial.
 
 ## Ajustes sensoriais e temas
 

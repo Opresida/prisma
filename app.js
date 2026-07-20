@@ -641,7 +641,7 @@
 
   /* ---------- Init ---------- */
   render();
-  window.addEventListener("load", function(){ setTimeout(hideBoot, 500); });
-  // fallback if 'load' already fired
-  setTimeout(hideBoot, 1600);
+  // Spinner de boot visível por ~4s, com fallback caso o evento 'load' não dispare
+  window.addEventListener("load", function(){ setTimeout(hideBoot, 4000); });
+  setTimeout(hideBoot, 4000);
 })();

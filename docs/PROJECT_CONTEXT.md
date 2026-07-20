@@ -24,7 +24,7 @@ python -m http.server 8899   # → http://127.0.0.1:8899
 
 **Pronto:**
 - App completo: boas-vindas → perfil → intro → questionário (1 pergunta/tela) → resultado (mapa por área + próximos passos).
-- Dois instrumentos: **AQ-10** (adulto, fiel) e **M-CHAT-R/F** (criança, *itens adaptados p/ protótipo* + scoring oficial).
+- Quatro instrumentos: **AQ-10** (adulto, fiel), **M-CHAT-R/F** (bebê 16–30m), **CAST** (criança 4–11) e **CAT-Q** (camuflagem, aprofundamento do adulto). Itens de M-CHAT/CAST/CAT-Q *adaptados p/ protótipo* + scoring/cortes oficiais.
 - **Papel timbrado** em PDF (via impressão) com rodapé IDASAM + MAZARI CORP.
 - **Spinner** de boot (reaproveitado ao gerar PDF).
 - Card **telemedicina "em breve"**.

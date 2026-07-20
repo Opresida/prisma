@@ -104,6 +104,63 @@
     ]
   };
 
+  // Criança 4–11 anos (responsável). Base: CAST (Cambridge); itens em redação adaptada.
+  var CAST = {
+    key:"child2",
+    title:"Criança — 4 a 11 anos",
+    metaProfile:"Criança 4–11 — respondido por responsável",
+    metaInstr:"CAST-adaptado (4–11)",
+    scale:"yesno",
+    options:YESNO,
+    source:"Adaptado do CAST (Scott, Baron-Cohen et al., 2002) para o protótipo; redação oficial a validar. Corte de encaminhamento ≥ 15.",
+    domains:{social:"Interação social", com:"Comunicação", brincar:"Brincar & imaginação", interesses:"Interesses & rotina", sensorial:"Respostas sensoriais"},
+    q:[
+      {t:"A criança procura compartilhar o que gosta com você (mostra coisas, chama para ver)?", d:"social", risk:"nao"},
+      {t:"A criança faz amizade com outras crianças com facilidade?", d:"social", risk:"nao"},
+      {t:"A criança prefere brincar sozinha a brincar com outras crianças?", d:"social", risk:"sim"},
+      {t:"A criança percebe quando alguém está triste ou chateado?", d:"social", risk:"nao"},
+      {t:"A criança olha nos seus olhos durante uma conversa?", d:"social", risk:"nao"},
+      {t:"A criança participa de brincadeiras em grupo (pega-pega, esconde-esconde) com prazer?", d:"social", risk:"nao"},
+      {t:"A criança entende as regras não ditas de uma brincadeira sem você precisar explicar?", d:"social", risk:"nao"},
+      {t:"Pessoas de fora costumam achar o comportamento da criança \"diferente\"?", d:"social", risk:"sim"},
+      {t:"A criança tem dificuldade de esperar a vez numa conversa ou brincadeira?", d:"social", risk:"sim"},
+      {t:"A criança se adapta a uma situação social nova sem muito estresse?", d:"social", risk:"nao"},
+      {t:"A fala da criança soa incomum (ritmo, entonação ou volume diferentes)?", d:"com", risk:"sim"},
+      {t:"A criança repete palavras ou frases fora de contexto (ecoa o que ouve)?", d:"com", risk:"sim"},
+      {t:"A criança usa gestos (apontar, acenar) junto com a fala?", d:"com", risk:"nao"},
+      {t:"A criança mantém uma conversa de ida e volta, e não só fala do que ela quer?", d:"com", risk:"nao"},
+      {t:"A criança entende piadas, ironia ou expressões (ex.: \"chovendo canivetes\")?", d:"com", risk:"nao"},
+      {t:"A criança fala como um \"pequeno adulto\", com vocabulário muito formal para a idade?", d:"com", risk:"sim"},
+      {t:"A criança te conta como foi o dia por conta própria?", d:"com", risk:"nao"},
+      {t:"A criança inventa brincadeiras de faz de conta variadas (histórias, personagens)?", d:"brincar", risk:"nao"},
+      {t:"Nas brincadeiras, a criança repete sempre a mesma cena do mesmo jeito?", d:"brincar", risk:"sim"},
+      {t:"A criança prefere organizar ou enfileirar os brinquedos a brincar com eles?", d:"brincar", risk:"sim"},
+      {t:"A criança entra em brincadeiras de faz de conta com outras crianças?", d:"brincar", risk:"nao"},
+      {t:"A criança tem um interesse muito intenso por um assunto específico (dinossauros, trens, números...)?", d:"interesses", risk:"sim"},
+      {t:"A criança fica muito incomodada com mudanças na rotina?", d:"interesses", risk:"sim"},
+      {t:"A criança tem rituais ou \"regras\" próprias que precisa cumprir?", d:"interesses", risk:"sim"},
+      {t:"A criança faz movimentos repetitivos quando está animada (bater as mãos, balançar o corpo)?", d:"interesses", risk:"sim"},
+      {t:"A criança se apega demais a objetos incomuns?", d:"interesses", risk:"sim"},
+      {t:"A criança insiste em fazer as coisas sempre na mesma ordem?", d:"interesses", risk:"sim"},
+      {t:"A criança reage de forma intensa a sons, luzes, texturas ou cheiros?", d:"sensorial", risk:"sim"},
+      {t:"A criança parece não sentir dor ou frio como as outras crianças?", d:"sensorial", risk:"sim"},
+      {t:"A criança é muito seletiva com comida (texturas, cores)?", d:"sensorial", risk:"sim"}
+    ],
+    bands:[
+      {max:11, key:"calm", label:"Poucos sinais", color:"#5c8f77",
+        blurb:"Poucos sinais nesta fase. Continue acompanhando o desenvolvimento; se algo mudar ou preocupar, converse com um profissional."},
+      {max:14, key:"mid", label:"Alguns sinais", color:"#b3893c",
+        blurb:"Alguns sinais aparecem, na faixa limítrofe. Vale conversar com o pediatra e considerar uma avaliação para entender melhor."},
+      {max:30, key:"high", label:"Vários sinais", color:"#b56a54",
+        blurb:"Vários sinais compatíveis (no CAST, 15 ou mais indica encaminhamento). O recomendado é procurar avaliação especializada — isso não define limites para a criança, só abre a porta para o apoio certo."}
+    ],
+    steps:[
+      "Leve este resultado ao pediatra e peça avaliação com neuropediatra, psiquiatra infantil ou psicólogo.",
+      "No SUS: comece na UBS para encaminhamento; o CAPSi atende crianças e adolescentes.",
+      "Converse com a escola — professores costumam notar sinais importantes no convívio."
+    ]
+  };
+
   // Aprofundamento do adulto: camuflagem (masking). Lançado a partir do resultado do AQ-10.
   var CATQ = {
     key:"catq",
@@ -156,7 +213,7 @@
     ]
   };
 
-  var INSTR = {adult:ADULT, child:CHILD, catq:CATQ};
+  var INSTR = {adult:ADULT, child:CHILD, child2:CAST, catq:CATQ};
 
   /* ---------- State ---------- */
   var st = {screen:"welcome", profile:null, i:0, raw:[], aq:null};
@@ -226,7 +283,8 @@
       '<p class="lede" style="margin-bottom:22px">Escolha o perfil para que as perguntas certas apareçam.</p>'+
       '<div class="choices">'+
         choice("adult","🧭","Sou um adulto explorando a mim mesmo","10 perguntas sobre como você percebe o mundo e as pessoas.")+
-        choice("child","🧸","Avalio meu filho ou filha","Para crianças de 16 a 30 meses. Você responde sobre o comportamento dela.")+
+        choice("child","🧸","Avalio meu bebê (16 a 30 meses)","Rastreio precoce. Você responde sobre o comportamento da criança.")+
+        choice("child2","🧩","Avalio minha criança (4 a 11 anos)","Sinais em idade escolar. Você responde sobre o dia a dia dela.")+
       '</div>'+
       '<div style="margin-top:22px"><button class="btn ghost small" data-a="home">← Voltar</button></div>'+
     '</div>';

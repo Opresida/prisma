@@ -14,7 +14,7 @@ Atualizar após cada funcionalidade aprovada. Datas em formato absoluto.
 - [ ] **Telemedicina** (hoje "em breve") — parceria com profissionais, fila/agenda, **consentimento**, conformidade CFM. Só ligar quando for real. (`CANON.md` §10)
 - [x] **Camuflagem (CAT-Q)** — 25 itens, subescalas Compensação/Máscara/Assimilação, cruzamento com o AQ-10 e PDF combinado (2026-07-20). Itens adaptados → validar redação PT-BR.
 - [ ] **RAADS-R** (80 itens) como aprofundamento completo do adulto (seccionado por domínio pela UX calma).
-- [ ] **Faixa 4–11 anos** — adicionar SCQ (ou CAST) como terceiro perfil.
+- [x] **Faixa 4–11 anos (CAST)** — terceiro perfil adicionado (2026-07-20). Optou-se pelo **CAST** (gratuito, Cambridge) em vez do **SCQ** (proprietário/WPS, licença paga). Itens adaptados → validar redação PT-BR (corte ≥15 já oficial).
 - [ ] **Histórico local (longitudinal)** — salvar resultados no aparelho e permitir comparar evolução ao refazer. Mantém local-first.
 - [ ] **Papel timbrado one-click** — avaliar jsPDF/html2canvas para baixar o PDF sem passar pelo diálogo de impressão (opcional; hoje via impressão é offline e robusto).
 

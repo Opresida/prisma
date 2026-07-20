@@ -44,6 +44,7 @@ Veja as regras inegociáveis em [`docs/CANON.md`](docs/CANON.md).
 | Adulto (autoavaliação) | **AQ-10** (Allison, Auyeung & Baron-Cohen, 2012) | 10 | 0–3 poucos · 4–5 alguns · **≥6 vários** (indicação de avaliação) |
 | Adulto — aprofundamento | **CAT-Q** (Hull et al., 2018) | 25 | Camuflagem em 3 subescalas (Compensação/Máscara/Assimilação); **≥100** de 25–175 = camufla |
 | Criança 16–30 meses (responsável) | **M-CHAT-R/F** (Robins, Fein & Barton) | 20 | 0–2 baixo · 3–7 moderado (seguimento) · 8–20 alto |
+| Criança 4–11 anos (responsável) | **CAST** (Scott, Baron-Cohen et al., 2002) | 30 | corte de encaminhamento **≥15** · gratuito (Cambridge/ARC) |
 
 > **Nota de fidelidade:** os itens do adulto seguem o AQ-10. Os itens da criança estão **adaptados para o protótipo** — antes de qualquer uso em produção, devem ser substituídos pela **redação oficial validada em português** do M-CHAT-R/F (Sociedade Brasileira de Pediatria). A lógica de pontuação já é a oficial.
 
@@ -104,7 +105,8 @@ Dado de saúde é **dado sensível** (LGPD, fiscalizado pela ANPD). Por isso o P
 
 - 🩺 **Telemedicina (em breve)** — atendimento imediato com profissionais capacitados e direcionados.
 - 🎭 **Camuflagem (CAT-Q)** — feito: aprofundamento opcional do adulto após o AQ-10, com PDF combinado e cruzamento "poucos sinais + camuflagem alta = perfil de diagnóstico tardio".
-- 🧩 RAADS-R (aprofundamento completo) e faixa 4–11 anos (SCQ).
+- 🧩 **Faixa 4–11 anos (CAST)** — feito: cobertura da idade escolar. Optou-se pelo CAST (gratuito, Cambridge) em vez do SCQ (licenciado/pago, WPS).
+- 🔬 RAADS-R — aprofundamento completo do adulto (pendente).
 - 📄 Itens oficiais validados PT-BR do M-CHAT-R/F.
 - 📈 Histórico local para acompanhar evolução ao longo do tempo.
 

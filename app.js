@@ -569,6 +569,269 @@
     document.body.style.overflow="";
   }
 
+  /* ---------- Exportar PDF (pdf-lib, vendorizado em assets/vendor) ----------
+     Gera um PDF de verdade em A4, com margens fixas de topo e rodapé e
+     quebra de página que nunca corta um bloco (card, linha, aviso, rodapé)
+     no meio. Se o pdf-lib não carregar, cai no window.print() nativo.        */
+  function hasPdfLib(){ return typeof window.PDFLib!=="undefined" && !!window.PDFLib.PDFDocument; }
+
+  // Remove glifos fora do WinAnsi (emoji, setas) e normaliza aspas/traços,
+  // porque as fontes padrão do PDF só cobrem Latin-1.
+  function sanPdf(s){
+    return String(s)
+      .replace(/[‘’]/g,"'")
+      .replace(/[“”]/g,'"')
+      .replace(/[–—]/g,"-")
+      .replace(/…/g,"...")
+      .replace(/≥/g,">=").replace(/≤/g,"<=").replace(/×/g,"x")
+      .replace(/[^\x00-\xff]/g,"")
+      .replace(/[ \t]+/g," ")
+      .trim();
+  }
+
+  async function makeLayout(){
+    var P=window.PDFLib;
+    var doc=await P.PDFDocument.create();
+    doc.setTitle("Prisma — Relatório de rastreio");
+    doc.setCreator("Prisma");
+    doc.setProducer("Prisma");
+    var f={
+      reg:  await doc.embedFont(P.StandardFonts.Helvetica),
+      bold: await doc.embedFont(P.StandardFonts.HelveticaBold),
+      ser:  await doc.embedFont(P.StandardFonts.TimesRoman),
+      serB: await doc.embedFont(P.StandardFonts.TimesRomanBold)
+    };
+    // A4 em pontos (595.28 x 841.89). Margens: laterais 48, topo 52, rodapé 72.
+    var W=595.28, H=841.89, MX=48, MT=52, MB=72, CW=W-2*MX;
+    var SPEC=["#6f8fb0","#4f9a93","#6aa17f","#b9a15c","#c08a6f","#9b7fae"];
+    var C={ink:"#1b2426",soft:"#6a7a76",body:"#3f4f4b",line:"#e2ebe7",panel:"#f4f8f6",
+      track:"#f0f4f2",rowline:"#eef2f0",warnBg:"#fbf7ef",warnLn:"#ecdfc3",warnIn:"#5b5030",warnB:"#3f3617"};
+    function hx(h){ h=h.replace("#",""); return P.rgb(parseInt(h.slice(0,2),16)/255,parseInt(h.slice(2,4),16)/255,parseInt(h.slice(4,6),16)/255); }
+    function wrapT(str,font,size,maxW){
+      var words=sanPdf(str).split(/\s+/), lines=[], cur="";
+      for(var i=0;i<words.length;i++){
+        var test=cur?cur+" "+words[i]:words[i];
+        if(cur && font.widthOfTextAtSize(test,size)>maxW){ lines.push(cur); cur=words[i]; }
+        else cur=test;
+      }
+      if(cur) lines.push(cur);
+      return lines.length?lines:[""];
+    }
+
+    var page, y;
+    function footer(pg){
+      pg.drawLine({start:{x:MX,y:MB-10},end:{x:W-MX,y:MB-10},thickness:1,color:hx(C.line)});
+      pg.drawText(sanPdf("Prisma - uma plataforma IDASAM, em parceria com a MAZARI CORP."),
+        {x:MX,y:MB-24,size:8,font:f.reg,color:hx(C.soft)});
+      var g=sanPdf("Gerado em "+today()+" · sem validade diagnóstica");
+      var gw=f.reg.widthOfTextAtSize(g,8);
+      pg.drawText(g,{x:W-MX-gw,y:MB-24,size:8,font:f.reg,color:hx(C.soft)});
+    }
+    function addPage(){ page=doc.addPage([W,H]); footer(page); y=H-MT; }
+    function ensure(h){ if(y-h < MB+6) addPage(); }
+    function gap(h){ y-=h; }
+    addPage(); // inicia a primeira página (define page/y)
+
+    function para(str,o){
+      o=o||{};
+      var font=o.font||f.reg, size=o.size||10.5, color=hx(o.color||C.body),
+          x=(o.x!=null?o.x:MX), maxW=(o.maxW!=null?o.maxW:CW), lh=o.lh||size*1.45,
+          lines=wrapT(str,font,size,maxW);
+      for(var i=0;i<lines.length;i++){
+        ensure(lh);
+        page.drawText(lines[i],{x:x,y:y-size,size:size,font:font,color:color});
+        y-=lh;
+      }
+    }
+    function markBox(x,by,size){
+      var seg=size/SPEC.length;
+      for(var i=0;i<SPEC.length;i++) page.drawRectangle({x:x+i*seg,y:by,width:seg+0.6,height:size,color:hx(SPEC[i])});
+    }
+    function brand(tag){
+      var h=30; ensure(h+6);
+      var by=y-h;
+      markBox(MX,by+2,26);
+      page.drawText("Prisma",{x:MX+36,y:by+6,size:20,font:f.serB,color:hx(C.ink)});
+      var t=sanPdf(tag).toUpperCase(), tw=f.bold.widthOfTextAtSize(t,8);
+      page.drawText(t,{x:W-MX-tw,y:by+9,size:8,font:f.bold,color:hx(C.soft)});
+      y-=h;
+    }
+    function hr(){
+      var h=4; ensure(h+18); y-=10;
+      var seg=CW/SPEC.length;
+      for(var i=0;i<SPEC.length;i++) page.drawRectangle({x:MX+i*seg,y:y-h,width:seg+0.6,height:h,color:hx(SPEC[i])});
+      y-=h+12;
+    }
+    function h1(str){ para(str,{font:f.serB,size:18,color:C.ink,lh:22}); }
+    function h2(str){ ensure(20); para(str,{font:f.serB,size:13,color:C.ink,lh:17}); }
+    function sub(str){ para(str,{font:f.reg,size:9.5,color:C.soft,lh:14}); }
+    function softline(str){ para(str,{font:f.reg,size:9,color:C.soft,lh:13}); }
+
+    function metaGrid(items){
+      var gp=14, n=items.length, bw=(CW-gp*(n-1))/n, h=46;
+      ensure(h);
+      var by=y-h;
+      for(var i=0;i<n;i++){
+        var bx=MX+i*(bw+gp);
+        page.drawRectangle({x:bx,y:by,width:bw,height:h,color:hx(C.panel),borderColor:hx(C.line),borderWidth:1});
+        page.drawText(sanPdf(items[i].k).toUpperCase(),{x:bx+11,y:by+h-16,size:7,font:f.bold,color:hx("#7a8a86")});
+        var vl=wrapT(items[i].v,f.bold,9.5,bw-22);
+        page.drawText(vl[0],{x:bx+11,y:by+h-30,size:9.5,font:f.bold,color:hx(C.ink)});
+        if(vl[1]) page.drawText(vl[1],{x:bx+11,y:by+h-40,size:9.5,font:f.bold,color:hx(C.ink)});
+      }
+      y-=h;
+    }
+    function resultCard(color,label,big,small){
+      var h=54; ensure(h);
+      var by=y-h, cy=by+h/2;
+      page.drawRectangle({x:MX,y:by,width:CW,height:h,color:P.rgb(1,1,1),borderColor:hx(C.line),borderWidth:1});
+      page.drawRectangle({x:MX,y:by,width:7,height:h,color:hx(color)});
+      page.drawText(sanPdf(label),{x:MX+22,y:cy-5,size:14,font:f.serB,color:hx(C.ink)});
+      var bg=sanPdf(big), bw=f.serB.widthOfTextAtSize(bg,16);
+      page.drawText(bg,{x:W-MX-16-bw,y:cy-1,size:16,font:f.serB,color:hx(C.ink)});
+      var sm=sanPdf(small).toUpperCase(), sw=f.bold.widthOfTextAtSize(sm,7);
+      page.drawText(sm,{x:W-MX-16-sw,y:cy-15,size:7,font:f.bold,color:hx("#7a8a86")});
+      y-=h;
+    }
+    function tableRow(name,ratio,barColor,right){
+      var rowH=24, size=9.5; ensure(rowH);
+      var cy=y-rowH/2;
+      page.drawText(sanPdf(name),{x:MX,y:cy-size*0.34,size:size,font:f.reg,color:hx(C.ink)});
+      var barX=MX+CW*0.44, barW=CW*0.44, bh=8, byy=cy-bh/2;
+      page.drawRectangle({x:barX,y:byy,width:barW,height:bh,color:hx(C.track)});
+      var fw=Math.max(barW*ratio, ratio>0?barW*0.06:barW*0.02);
+      page.drawRectangle({x:barX,y:byy,width:fw,height:bh,color:hx(barColor)});
+      var rt=sanPdf(right), rw=f.reg.widthOfTextAtSize(rt,size);
+      page.drawText(rt,{x:W-MX-rw,y:cy-size*0.34,size:size,font:f.reg,color:hx(C.soft)});
+      page.drawLine({start:{x:MX,y:y-rowH},end:{x:W-MX,y:y-rowH},thickness:0.75,color:hx(C.rowline)});
+      y-=rowH;
+    }
+    function list(items){
+      var size=10, lh=size*1.5, tx=MX+18, maxW=CW-18;
+      items.forEach(function(it){
+        var lines=wrapT(it,f.reg,size,maxW);
+        ensure(lh);
+        page.drawText("•",{x:MX+4,y:y-size,size:size,font:f.reg,color:hx(C.body)});
+        page.drawText(lines[0],{x:tx,y:y-size,size:size,font:f.reg,color:hx(C.body)});
+        y-=lh;
+        for(var i=1;i<lines.length;i++){ ensure(lh); page.drawText(lines[i],{x:tx,y:y-size,size:size,font:f.reg,color:hx(C.body)}); y-=lh; }
+        y-=3;
+      });
+    }
+    function warn(title,bodyStr){
+      var size=9, lh=size*1.5, padX=14, padY=12, maxW=CW-padX*2;
+      var titleT=sanPdf(title)+" ", tw=f.bold.widthOfTextAtSize(titleT,size);
+      var words=sanPdf(bodyStr).split(/\s+/), lines=[], cur="";
+      for(var i=0;i<words.length;i++){
+        var test=cur?cur+" "+words[i]:words[i];
+        var avail=(lines.length===0)?maxW-tw:maxW;
+        if(cur && f.reg.widthOfTextAtSize(test,size)>avail){ lines.push(cur); cur=words[i]; }
+        else cur=test;
+      }
+      if(cur) lines.push(cur);
+      var boxH=padY*2+lines.length*lh;
+      ensure(boxH);
+      var by=y-boxH, ty=y-padY-size;
+      page.drawRectangle({x:MX,y:by,width:CW,height:boxH,color:hx(C.warnBg),borderColor:hx(C.warnLn),borderWidth:1});
+      page.drawText(titleT,{x:MX+padX,y:ty,size:size,font:f.bold,color:hx(C.warnB)});
+      if(lines[0]) page.drawText(lines[0],{x:MX+padX+tw,y:ty,size:size,font:f.reg,color:hx(C.warnIn)});
+      for(var j=1;j<lines.length;j++){ ty-=lh; page.drawText(lines[j],{x:MX+padX,y:ty,size:size,font:f.reg,color:hx(C.warnIn)}); }
+      y=by;
+    }
+    async function save(){ return await doc.save(); }
+
+    return {brand:brand,hr:hr,h1:h1,h2:h2,sub:sub,softline:softline,para:para,
+      metaGrid:metaGrid,resultCard:resultCard,tableRow:tableRow,list:list,warn:warn,
+      gap:gap,save:save};
+  }
+
+  async function buildPdfStandard(){
+    var L=await makeLayout(), it=inst(), r=compute(), b=r.band;
+    L.brand("Relatório de rastreio");
+    L.hr();
+    L.h1("Resultado do rastreio de sinais");
+    L.sub("Instrumento de orientação — não constitui diagnóstico.");
+    L.gap(10);
+    L.metaGrid([{k:"Data",v:today()},{k:"Perfil",v:it.metaProfile},{k:"Instrumento",v:it.metaInstr}]);
+    L.gap(16);
+    L.resultCard(b.color,b.label,r.total+" / "+r.n,"sinais");
+    L.gap(14);
+    L.para(b.blurb);
+    L.gap(10);
+    L.h2("Mapa por área");
+    L.gap(6);
+    Object.keys(it.domains).forEach(function(k){
+      var d=r.dom[k], ratio=d.n?d.c/d.n:0;
+      L.tableRow(it.domains[k],ratio,ratioColor(ratio),d.c+"/"+d.n);
+    });
+    L.gap(14);
+    L.h2("Próximos passos");
+    L.gap(6);
+    L.list(it.steps);
+    L.gap(14);
+    L.warn("Aviso:","Este documento é um instrumento de rastreio (orientação) e não constitui diagnóstico. Somente uma avaliação profissional pode confirmar ou descartar o Transtorno do Espectro Autista (TEA). "+it.source);
+    L.gap(12);
+    L.softline("Em breve: atendimento imediato via telemedicina com profissionais capacitados, direto pelo Prisma.");
+    return await L.save();
+  }
+
+  async function buildPdfCatq(){
+    var L=await makeLayout(), cs=catqScore(), aq=st.aq;
+    L.brand("Rastreio + camuflagem");
+    L.hr();
+    L.h1("Rastreio de sinais e camuflagem");
+    L.sub("Instrumentos de orientação — não constituem diagnóstico.");
+    L.gap(10);
+    L.metaGrid([{k:"Data",v:today()},{k:"Perfil",v:"Adulto (autoavaliação)"},{k:"Instrumentos",v:"AQ-10 + CAT-Q"}]);
+    L.gap(16);
+    if(aq){ L.resultCard(aq.band.color,"AQ-10 · "+aq.band.label,aq.total+" / "+aq.n,"sinais"); L.gap(12); }
+    L.resultCard(cs.camouflaging?"#b3893c":"#5c8f77","Camuflagem (CAT-Q)",cs.total+" / 175",
+      cs.camouflaging?"acima do limiar 100":"abaixo do limiar 100");
+    L.gap(14);
+    L.h2("Formas de camuflagem");
+    L.gap(6);
+    [{k:"Compensação",v:cs.comp,m:cs.compMax},{k:"Máscara",v:cs.mask,m:cs.maskMax},{k:"Assimilação",v:cs.assim,m:cs.assimMax}]
+      .forEach(function(s){ L.tableRow(s.k,s.v/s.m,"#3a7d74",s.v+"/"+s.m); });
+    L.gap(14);
+    if(aq && aq.total<6 && cs.camouflaging){
+      L.warn("Padrão de atenção:","poucos sinais aparentes no AQ-10 + camuflagem alta no CAT-Q — perfil frequentemente associado a diagnóstico tardio. Recomenda-se avaliação profissional com os dois resultados.");
+      L.gap(14);
+    }
+    L.h2("Próximos passos");
+    L.gap(6);
+    L.list(CATQ.steps);
+    L.gap(14);
+    L.warn("Aviso:","rastreio e camuflagem são orientação, não diagnóstico. Somente avaliação profissional confirma ou descarta o TEA. "+CATQ.source);
+    L.gap(12);
+    L.softline("Em breve: atendimento imediato via telemedicina com profissionais capacitados, direto pelo Prisma.");
+    return await L.save();
+  }
+
+  function pdfName(){
+    if(st.profile==="catq") return "prisma-rastreio-camuflagem.pdf";
+    if(st.profile==="child") return "prisma-rastreio-crianca-16-30m.pdf";
+    if(st.profile==="child2") return "prisma-rastreio-crianca-4-11.pdf";
+    return "prisma-rastreio-adulto.pdf";
+  }
+  function exportPdf(){
+    if(!hasPdfLib()){ window.print(); return; }  // fallback nativo
+    showBoot("Gerando seu PDF…");
+    var build = st.profile==="catq" ? buildPdfCatq : buildPdfStandard;
+    build().then(function(bytes){
+      var blob=new Blob([bytes],{type:"application/pdf"});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement("a");
+      a.href=url; a.download=pdfName();
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 6000);
+      hideBoot();
+    }).catch(function(err){
+      hideBoot();
+      if(window.console) console.error("Falha ao gerar PDF:",err);
+      window.print();
+    });
+  }
+
   /* ---------- Boot / spinner ---------- */
   function showBoot(msg){ if(bootMsg) bootMsg.innerHTML=msg; boot.classList.remove("hide"); }
   function hideBoot(){ boot.classList.add("hide"); }
@@ -582,7 +845,7 @@
       setTimeout(function(){ hideBoot(); openDoc(); }, 550);
       return;
     }
-    if(a==="print"){ window.print(); return; }
+    if(a==="print"){ exportPdf(); return; }
     if(a==="closedoc"){ closeDoc(); return; }
     // navigation actions
     if(a==="start"){ st.screen="profile"; }

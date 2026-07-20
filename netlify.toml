@@ -28,6 +28,12 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# JS na raiz (app.js) — sempre revalidado, para nunca servir lógica velha
+[[headers]]
+  for = "/app.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 # Rota /ciencia → documento de fundamentação científica
 [[redirects]]
   from = "/ciencia"

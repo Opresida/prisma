@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Prisma — Fundamentação Científica dos Instrumentos</title>
+  <meta name="description" content="Os quatro instrumentos de rastreio do Prisma (AQ-10, CAT-Q, M-CHAT-R/F, CAST): origem, propósito, pontuação e fontes oficiais. Nada foi inventado — três dos quatro vêm da Universidade de Cambridge.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#e5ece9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1516" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://prismatea.netlify.app/ciencia">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Prisma">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://prismatea.netlify.app/ciencia">
+  <meta property="og:title" content="Os instrumentos por trás do Prisma — base científica">
+  <meta property="og:description" content="AQ-10, CAT-Q, M-CHAT-R/F e CAST: validados, com fontes oficiais. Três dos quatro da Universidade de Cambridge.">
+  <meta property="og:image" content="https://prismatea.netlify.app/assets/og-ciencia.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Prisma — Fundamentação científica dos instrumentos: AQ-10, CAT-Q, M-CHAT-R/F, CAST.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Os instrumentos por trás do Prisma — base científica">
+  <meta name="twitter:description" content="AQ-10, CAT-Q, M-CHAT-R/F e CAST: validados, com fontes oficiais. Três dos quatro de Cambridge.">
+  <meta name="twitter:image" content="https://prismatea.netlify.app/assets/og-ciencia.png">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --paper:#ffffff; --ink:#1b2426; --ink-soft:#55635f; --line:#e2ebe7;
+      --petrol:#3a7d74; --petrol-ink:#2a5d55; --soft:#f4f8f6;
+      --calm:#5c8f77; --mid:#b3893c; --high:#b56a54; --desk:#e5ece9;
+      --spectrum:linear-gradient(90deg,#6f8fb0,#4f9a93,#6aa17f,#b9a15c,#c08a6f,#9b7fae);
+    }
+    @media (prefers-color-scheme: dark){ :root{ --desk:#0f1516; } }
+    :root[data-theme="dark"]{ --desk:#0f1516; }
+    :root[data-theme="light"]{ --desk:#e5ece9; }
+
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{background:var(--desk);
+      font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+      color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased}
+    a{color:var(--petrol-ink)}
+    :focus-visible{outline:3px solid var(--petrol-ink); outline-offset:2px; border-radius:6px}
+
+    .nav{max-width:860px; margin:0 auto; padding:16px clamp(16px,4vw,24px) 0; display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .nav a.back{display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-weight:600; font-size:.9rem;
+      background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:8px 15px; color:var(--ink)}
+    .nav a.back:hover{border-color:var(--petrol)}
+    .nav .url{font-size:.8rem; color:var(--ink-soft)}
+
+    h1,h2,h3{font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif; font-weight:600; line-height:1.2; margin:0; text-wrap:balance; color:var(--ink)}
+    .sheet{background:var(--paper); max-width:860px; margin:18px auto 60px; border-radius:8px;
+      box-shadow:0 20px 60px rgba(20,40,35,.22); padding:52px clamp(24px,6vw,60px) 40px; overflow:hidden}
+
+    .brand{display:flex; align-items:center; gap:12px}
+    .mark{width:30px; height:30px; border-radius:8px; background:var(--spectrum)}
+    .brand .nm{font-family:Georgia,serif; font-size:1.5rem; font-weight:600}
+    .brand .tg{margin-left:auto; text-align:right; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700}
+    .rule{height:4px; border-radius:4px; margin:16px 0 26px; background:var(--spectrum)}
+    .eyebrow{font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--petrol-ink); font-weight:800; margin-bottom:10px}
+    h1{font-size:clamp(1.7rem,1.3rem+1.8vw,2.4rem); margin-bottom:12px}
+    .sub{color:var(--ink-soft); font-size:1.05rem; max-width:60ch}
+    .docmeta{display:flex; flex-wrap:wrap; gap:10px 26px; margin:22px 0 30px; padding:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+    .docmeta div{font-size:.86rem}
+    .docmeta .k{font-size:.64rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); font-weight:700}
+    .docmeta .v{color:var(--ink); font-weight:600}
+
+    section{margin-top:34px}
+    h2{font-size:1.35rem; margin-bottom:12px; display:flex; align-items:baseline; gap:12px}
+    h2 .num{font-size:.9rem; color:var(--petrol); font-weight:700; font-family:"Segoe UI",sans-serif; letter-spacing:.05em}
+    p{margin:0 0 12px}
+    .lead{color:var(--ink-soft)}
+    strong{color:var(--ink)}
+
+    .tbl-wrap{overflow-x:auto; margin-top:8px}
+    table{width:100%; border-collapse:collapse; font-size:.9rem; min-width:560px}
+    thead th{text-align:left; font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; padding:0 12px 9px 0; border-bottom:2px solid var(--line)}
+    tbody td{padding:12px 12px 12px 0; border-bottom:1px solid var(--line); vertical-align:top}
+    tbody td:first-child{font-weight:600}
+    tbody tr:last-child td{border-bottom:none}
+
+    .instr{border:1px solid var(--line); border-radius:14px; padding:24px 26px; margin-top:20px; background:var(--soft); break-inside:avoid; page-break-inside:avoid}
+    .instr-head{display:flex; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:6px}
+    .instr-head h3{font-size:1.18rem}
+    .instr-head .chip{font-size:.66rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:#fff; border-radius:999px; padding:4px 11px; white-space:nowrap}
+    .origin{font-size:.85rem; color:var(--ink-soft); margin:2px 0 16px}
+    .origin b{color:var(--ink)}
+    .field{margin:0 0 12px}
+    .field .lbl{font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--petrol-ink); font-weight:800; margin-bottom:2px}
+    .field p{margin:0; font-size:.95rem}
+    .field.why{background:#fff; border:1px solid var(--line); border-left:3px solid var(--petrol); border-radius:8px; padding:12px 14px; margin-top:14px}
+    .src{font-size:.8rem; color:var(--ink-soft); margin-top:12px}
+    .src b{color:var(--ink)}
+
+    .gov{background:var(--soft); border:1px solid var(--line); border-radius:14px; padding:22px 26px; margin-top:20px}
+    .gov ul{margin:8px 0 0; padding-left:20px}
+    .gov li{margin-bottom:8px; font-size:.95rem}
+
+    .refs{font-size:.82rem; color:var(--ink-soft); line-height:1.7}
+    .refs li{margin-bottom:9px}
+    .refs b{color:var(--ink)}
+
+    .foot{margin-top:40px; padding-top:20px; border-top:2px solid var(--line); display:flex; flex-wrap:wrap; gap:8px 18px; justify-content:space-between; align-items:baseline; font-size:.82rem; color:var(--ink-soft)}
+    .foot .credit b{color:var(--ink)}
+
+    @media print{
+      body{background:#fff}
+      .nav{display:none}
+      .sheet{box-shadow:none; border-radius:0; max-width:none; padding:0; margin:0}
+      .instr,.gov{background:#fff}
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="back" href="index.html">← Abrir o Prisma</a>
+    <span class="url">prismatea.netlify.app/ciencia</span>
+  </nav>
+
+  <div class="sheet">
+
+    <div class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      <span class="nm">Prisma</span>
+      <span class="tg">Documento técnico<br>Fundamentação científica</span>
+    </div>
+    <div class="rule" aria-hidden="true"></div>
+
+    <p class="eyebrow">Os instrumentos por trás do Prisma</p>
+    <h1>Rastreio de autismo com base científica: o que usamos e por quê</h1>
+    <p class="sub">Uma apresentação transparente dos quatro instrumentos de rastreio do Prisma — origem, propósito, pontuação e fontes oficiais. Nenhum foi inventado por nós.</p>
+
+    <div class="docmeta">
+      <div><div class="k">Preparado para</div><div class="v">IDASAM</div></div>
+      <div><div class="k">Por</div><div class="v">MAZARI CORP.</div></div>
+      <div><div class="k">Data</div><div class="v">Julho de 2026</div></div>
+      <div><div class="k">Natureza</div><div class="v">Ferramenta de orientação — não diagnóstica</div></div>
+    </div>
+
+    <section>
+      <h2>Rastreio não é diagnóstico</h2>
+      <p class="lead">O Prisma <strong>não diagnostica</strong> autismo — nenhum questionário faz isso. Diagnóstico é um ato clínico, feito por equipe multiprofissional. O que o Prisma faz é aplicar instrumentos de <strong>rastreio (screening)</strong> reconhecidos internacionalmente para estimar a presença de sinais e, quando indicado, <strong>orientar a busca por uma avaliação profissional</strong>.</p>
+      <p class="lead">Todos os instrumentos aqui são <strong>publicados, revisados por pares e amplamente utilizados</strong> na prática clínica e na pesquisa. <strong>Três dos quatro vêm do Autism Research Centre da Universidade de Cambridge</strong>, referência mundial no tema, sob liderança do Prof. Simon Baron-Cohen. Este documento apresenta cada um.</p>
+    </section>
+
+    <section>
+      <h2>Visão geral</h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Instrumento</th><th>Público</th><th>Origem</th><th>Itens</th><th>Corte para encaminhamento</th></tr></thead>
+          <tbody>
+            <tr><td>AQ-10</td><td>Adultos (16+)</td><td>Cambridge · 2012</td><td>10</td><td>≥ 6</td></tr>
+            <tr><td>CAT-Q</td><td>Adultos (16+) — camuflagem</td><td>Hull et al. · 2019</td><td>25</td><td>≥ 100 (de 175)</td></tr>
+            <tr><td>M-CHAT-R/F</td><td>Bebês 16–30 meses</td><td>Robins, Fein &amp; Barton · 2009</td><td>20</td><td>≥ 3 (seguimento) · ≥ 8 (alto)</td></tr>
+            <tr><td>CAST</td><td>Crianças 4–11 anos</td><td>Cambridge · 2002</td><td>~37</td><td>≥ 15</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">01</span> AQ-10 — Autism Spectrum Quotient (10 itens)</h2>
+      <div class="instr">
+        <div class="instr-head"><h3>Triagem de adultos</h3><span class="chip" style="background:var(--petrol)">Adultos</span></div>
+        <p class="origin"><b>Origem:</b> Allison, Auyeung &amp; Baron-Cohen (2012) — Autism Research Centre, Universidade de Cambridge. Deriva do AQ original (Baron-Cohen et al., 2001).</p>
+        <div class="field"><div class="lbl">O que mede</div><p>Traços associados ao autismo em adultos, em cinco áreas: atenção a detalhes, troca de atenção, comunicação, imaginação e habilidades sociais.</p></div>
+        <div class="field"><div class="lbl">Formato e pontuação</div><p>10 afirmações respondidas em 4 níveis (concordo/discordo). 1 ponto por item; total de 0 a 10. Pontuação <strong>≥ 6</strong> indica que uma avaliação especializada é recomendada.</p></div>
+        <div class="field"><div class="lbl">Evidência</div><p>Versão curta derivada e validada a partir de amostras grandes (milhares de casos e controles). É <strong>recomendado por diretrizes internacionais</strong> — como a do NICE (Reino Unido) — como triagem inicial de autismo em adultos.</p></div>
+        <div class="field why"><div class="lbl">Por que usamos no Prisma</div><p>É a porta de entrada padrão do público adulto: rápido, gratuito e vindo do laboratório de referência mundial. Confiável e reconhecível para profissionais.</p></div>
+        <p class="src"><b>Fonte oficial:</b> Autism Research Centre, University of Cambridge — autismresearchcentre.com</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">02</span> CAT-Q — Camuflagem (Camouflaging Autistic Traits Questionnaire)</h2>
+      <div class="instr">
+        <div class="instr-head"><h3>Camuflagem em adultos</h3><span class="chip" style="background:var(--mid)">Camuflagem</span></div>
+        <p class="origin"><b>Origem:</b> Hull, Mandy, Lai, Baron-Cohen, Allison, Smith &amp; Petrides (2019) — publicado no <i>Journal of Autism and Developmental Disorders</i>.</p>
+        <div class="field"><div class="lbl">O que mede</div><p>Camuflagem (<i>masking</i>): o esforço consciente de disfarçar traços autistas para se encaixar socialmente. Avaliada em três dimensões — <strong>Compensação</strong>, <strong>Máscara</strong> e <strong>Assimilação</strong>.</p></div>
+        <div class="field"><div class="lbl">Formato e pontuação</div><p>25 afirmações em escala de 7 pontos; total de 25 a 175. Pontuação total <strong>≥ 100</strong> sugere camuflagem significativa.</p></div>
+        <div class="field why"><div class="lbl">Por que é importante (e por que usamos)</div><p>Quem camufla bem pode <strong>passar despercebido</strong> nos rastreios tradicionais: poucos sinais aparentes, muito esforço escondido. É o perfil clássico do <strong>diagnóstico tardio</strong>, especialmente em mulheres. No Prisma, o CAT-Q é oferecido após o AQ-10 e <strong>cruzado</strong> com ele — quando aparecem poucos sinais somados a camuflagem alta, o app sinaliza justamente esse padrão que costuma escapar.</p></div>
+        <p class="src"><b>Fonte oficial:</b> Hull et al. (2019), <i>J. Autism Dev. Disord.</i>, 49(3):819–833.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">03</span> M-CHAT-R/F — Rastreio precoce (16 a 30 meses)</h2>
+      <div class="instr">
+        <div class="instr-head"><h3>Bebês — respondido pelo responsável</h3><span class="chip" style="background:var(--calm)">Bebês</span></div>
+        <p class="origin"><b>Origem:</b> Robins, Fein &amp; Barton (2009), revisão do M-CHAT original (2001). Validação: Robins et al. (2014), <i>Pediatrics</i>.</p>
+        <div class="field"><div class="lbl">O que mede</div><p>Sinais precoces de autismo em bebês de 16 a 30 meses (comunicação, apontar, contato social, imitação, respostas sensoriais), respondido por pai/mãe ou responsável.</p></div>
+        <div class="field"><div class="lbl">Formato e pontuação</div><p>20 perguntas sim/não. <strong>0–2</strong> baixo risco; <strong>3–7</strong> risco médio (indica entrevista de seguimento); <strong>8–20</strong> risco alto.</p></div>
+        <div class="field"><div class="lbl">Evidência</div><p><strong>Padrão-ouro do rastreio precoce</strong>, usado em rotinas de puericultura (a Academia Americana de Pediatria recomenda rastreio de autismo aos 18 e 24 meses). Possui <strong>versão validada em português brasileiro</strong> (Losapio &amp; Pondé, 2008) e é divulgado pela <strong>Sociedade Brasileira de Pediatria</strong>.</p></div>
+        <div class="field why"><div class="lbl">Por que usamos no Prisma</div><p>Quanto mais cedo o rastreio, mais cedo o apoio — e isso muda a trajetória de desenvolvimento da criança. Gratuito e consagrado.</p></div>
+        <p class="src"><b>Fonte oficial:</b> mchatscreen.com</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">04</span> CAST — Idade escolar (4 a 11 anos)</h2>
+      <div class="instr">
+        <div class="instr-head"><h3>Crianças — respondido pelo responsável</h3><span class="chip" style="background:var(--high)">Crianças</span></div>
+        <p class="origin"><b>Origem:</b> Scott, Baron-Cohen, Bolton &amp; Brayne (2002) — Autism Research Centre, Universidade de Cambridge. (<i>Childhood Autism Spectrum Test</i>, originalmente <i>Childhood Asperger Syndrome Test</i>.)</p>
+        <div class="field"><div class="lbl">O que mede</div><p>Sinais de autismo em crianças de 4 a 11 anos (interação social, comunicação, brincar e imaginação, interesses e rotina, respostas sensoriais), respondido pelo responsável.</p></div>
+        <div class="field"><div class="lbl">Formato e pontuação</div><p>Questionário respondido pelos pais; pontuação de corte <strong>≥ 15</strong> indica encaminhamento para avaliação completa.</p></div>
+        <div class="field"><div class="lbl">Evidência</div><p>Em estudos de validação, apresentou <strong>alta acurácia</strong> (sensibilidade em torno de 100% e especificidade de ~97% no ponto de corte 15). Gratuito e amplamente usado em triagem escolar.</p></div>
+        <div class="field why"><div class="lbl">Por que usamos no Prisma</div><p>Fecha o intervalo de idade entre o bebê (M-CHAT) e o adulto (AQ-10) — a idade escolar, quando muitos sinais ficam mais visíveis. Também vem de Cambridge. <strong>Optamos por ele no lugar do SCQ</strong>, que é um instrumento proprietário de licença paga — o CAST entrega o mesmo trabalho, gratuitamente.</p></div>
+        <p class="src"><b>Fonte oficial:</b> Autism Research Centre, University of Cambridge — autismresearchcentre.com</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Como o Prisma usa isso com responsabilidade</h2>
+      <div class="gov">
+        <ul>
+          <li><strong>Orientação, não diagnóstico:</strong> todo resultado encaminha para avaliação profissional; o app nunca afirma que a pessoa "tem autismo".</li>
+          <li><strong>Pontos de corte oficiais:</strong> os limiares e a lógica de pontuação seguem exatamente os dos instrumentos originais publicados.</li>
+          <li><strong>Privacidade (LGPD):</strong> as respostas são processadas no aparelho do usuário; nada é enviado a servidores.</li>
+          <li><strong>Tradução validada:</strong> na versão de produção, a redação dos itens em português seguirá as <strong>traduções oficiais validadas</strong> de cada instrumento (o M-CHAT-R/F já possui versão validada em PT-BR).</li>
+          <li><strong>Revisão profissional:</strong> o conteúdo e os textos de encaminhamento são pensados para revisão por profissional habilitado antes do uso em larga escala.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Referências</h2>
+      <ol class="refs">
+        <li>Allison C, Auyeung B, Baron-Cohen S. (2012). Toward brief "red flags" for autism screening: the Short Autism Spectrum Quotient. <b>J. Am. Acad. Child Adolesc. Psychiatry</b>, 51(2):202–212.</li>
+        <li>Baron-Cohen S, Wheelwright S, Skinner R, Martin J, Clubley E. (2001). The Autism-Spectrum Quotient (AQ). <b>J. Autism Dev. Disord.</b>, 31(1):5–17.</li>
+        <li>Hull L, Mandy W, Lai M-C, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). Development and validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q). <b>J. Autism Dev. Disord.</b>, 49(3):819–833.</li>
+        <li>Robins DL, Fein D, Barton M. (2009). Modified Checklist for Autism in Toddlers, Revised, with Follow-Up (M-CHAT-R/F). Validação: Robins DL et al. (2014), <b>Pediatrics</b>, 133(1):37–45.</li>
+        <li>Losapio MF, Pondé MP. (2008). Tradução para o português da escala M-CHAT para rastreamento precoce de autismo. <b>Rev. Psiquiatr. Rio Gd. Sul</b>.</li>
+        <li>Scott FJ, Baron-Cohen S, Bolton P, Brayne C. (2002). The CAST (Childhood Asperger Syndrome Test): preliminary development. <b>Autism</b>, 6(1):9–31.</li>
+      </ol>
+    </section>
+
+    <div class="foot">
+      <div class="credit"><b>Prisma</b> — uma plataforma <b>IDASAM</b>, desenvolvida em parceria com a <b>MAZARI CORP.</b></div>
+      <div>Documento técnico · Julho de 2026 · sem validade diagnóstica</div>
+    </div>
+
+  </div>
+</body>
+</html>

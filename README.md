@@ -89,8 +89,11 @@ prisma/
 ├── netlify.toml        # Deploy + headers/CSP
 ├── assets/
 │   ├── favicon.svg     # Marca (espectro/prisma)
-│   └── og-image.png    # Card social 1200×630
+│   ├── og-image.png    # Card social 1200×630
+│   └── og-ciencia.png  # Card social exclusivo da /ciencia
 ├── og.html             # Fonte do OG (renderizada → og-image.png)
+├── ciencia.html        # Rota /ciencia — fundamentação científica (documento p/ IDASAM)
+├── og-ciencia.html     # Fonte do OG exclusivo da /ciencia
 └── docs/
     ├── CANON.md          # ⚖️ Regras inegociáveis (clínicas/éticas)
     ├── CONTEXT.md        # Produto, público, posicionamento, regulatório

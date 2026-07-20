@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+  *{margin:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  .card{width:1200px;height:630px;position:relative;padding:60px 76px;
+    background:radial-gradient(130% 150% at 0% 0%, #eef4f1 0%, #e4ede9 50%, #dbe7e1 100%);
+    font-family:"Segoe UI",system-ui,Arial,sans-serif;color:#1b2426;display:flex;flex-direction:column}
+  .spectrum{position:absolute;left:0;top:0;height:12px;width:100%;
+    background:linear-gradient(90deg,#6f8fb0,#4f9a93,#6aa17f,#b9a15c,#c08a6f,#9b7fae)}
+  .brand{display:flex;align-items:center;gap:16px}
+  .mark{width:52px;height:52px;border-radius:14px;
+    background:linear-gradient(135deg,#6f8fb0,#4f9a93,#6aa17f,#b9a15c,#c08a6f,#9b7fae);
+    box-shadow:0 10px 28px rgba(30,60,55,.18)}
+  .brand .nm{font-family:Georgia,serif;font-size:40px;font-weight:600}
+  .eyebrow{margin-top:38px;font-size:19px;letter-spacing:.18em;text-transform:uppercase;color:#3a7d74;font-weight:800}
+  h1{font-family:Georgia,serif;font-size:60px;line-height:1.08;font-weight:600;letter-spacing:-.01em;margin:12px 0 0;max-width:20ch}
+  .chips{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+  .chip{font-size:23px;font-weight:700;letter-spacing:.02em;color:#fff;border-radius:999px;padding:9px 22px;
+    box-shadow:0 6px 16px rgba(30,60,55,.14)}
+  .cred{display:flex;align-items:center;gap:14px;margin-top:auto;font-size:24px;color:#3f4f4b}
+  .cred b{color:#1b2426;font-weight:700}
+  .dot{width:6px;height:6px;border-radius:50%;background:#9bb0aa}
+  .foot{margin-top:22px;font-size:21px;color:#55635f}
+  .foot b{color:#1b2426;font-weight:700}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="spectrum"></div>
+    <div class="brand"><span class="mark"></span><span class="nm">Prisma</span></div>
+    <p class="eyebrow">Documento técnico · Fundamentação científica</p>
+    <h1>Os instrumentos por trás do Prisma</h1>
+    <div class="chips">
+      <span class="chip" style="background:#3a7d74">AQ-10</span>
+      <span class="chip" style="background:#b3893c">CAT-Q</span>
+      <span class="chip" style="background:#5c8f77">M-CHAT-R/F</span>
+      <span class="chip" style="background:#b56a54">CAST</span>
+    </div>
+    <div class="cred"><span>Validados cientificamente</span><span class="dot"></span><span><b>3 de 4 da Universidade de Cambridge</b></span></div>
+    <p class="foot"><b>IDASAM</b> · em parceria com a <b>MAZARI CORP.</b></p>
+  </div>
+</body>
+</html>

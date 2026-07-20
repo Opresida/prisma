@@ -270,6 +270,7 @@
       '</div>'+
       '<button class="btn" data-a="start">Começar &nbsp;→</button>'+
       PARTNERS+
+      '<p style="text-align:center;margin-top:10px"><a href="ciencia.html" style="color:var(--ink-soft);font-size:.82rem;text-decoration:underline;text-underline-offset:3px">🔬 Fundamentação científica dos instrumentos</a></p>'+
     '</div>';
   }
   function fact(b,s){

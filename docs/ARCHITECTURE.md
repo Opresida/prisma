@@ -83,7 +83,8 @@ Apenas `localStorage` para preferências sensoriais. **Respostas não são persi
 ## Deploy, headers e OG
 
 - `netlify.toml`: `publish = "."`, sem build, **CSP** (`script-src 'self'`, `style-src 'self' 'unsafe-inline'` por causa dos estilos inline), cache longo em `/assets/*`.
-- **Pipeline do OG:** `og.html` é a fonte; renderiza-se em 1200×630 e captura-se `assets/og-image.png`. Ao mudar a copy do card, regenerar a imagem.
+- **Pipeline do OG:** `og.html` é a fonte; renderiza-se em 1200×630 e captura-se `assets/og-image.png`. Ao mudar a copy do card, regenerar a imagem. A rota `/ciencia` tem OG próprio (`og-ciencia.html` → `assets/og-ciencia.png`). Ao regenerar, garanta que o PNG saia em **1200×630 reais** — se o `devicePixelRatio` do capturador for ≠ 1, ajuste o viewport/zoom (checar com `file` as dimensões).
+- **Rota `/ciencia`:** página estática independente (`ciencia.html`), com `<head>`/OG próprios; servida via `netlify.toml` (`/ciencia → /ciencia.html`). Não faz parte da máquina de telas do app — é um documento.
 
 ## Não-objetivos (por enquanto)
 

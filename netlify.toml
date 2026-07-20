@@ -28,7 +28,13 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# SPA leve: garante que a raiz responda
+# Rota /ciencia → documento de fundamentação científica
+[[redirects]]
+  from = "/ciencia"
+  to = "/ciencia.html"
+  status = 200
+
+# SPA leve: garante que a raiz responda (após checar arquivos reais)
 [[redirects]]
   from = "/*"
   to = "/index.html"

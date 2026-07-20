@@ -31,6 +31,7 @@ python -m http.server 8899   # → http://127.0.0.1:8899
 - Card **telemedicina "em breve"**.
 - **Ajustes sensoriais** (reduzir movimento / texto maior) + temas claro/escuro.
 - Favicon, `manifest.json`, **OG 1200×630** (`assets/og-image.png`), `netlify.toml` + CSP.
+- **Rota `/ciencia`** — documento de fundamentação científica dos 4 instrumentos (para o IDASAM), com **OG próprio** (`assets/og-ciencia.png`) e link no app.
 - Documentação: README, CLAUDE.md, CANON, CONTEXT, ARCHITECTURE, TODO, este arquivo.
 
 **Pendente (ver `TODO.md`):**

@@ -54,6 +54,7 @@ Sem testes automatizados ainda (ver `docs/TODO.md`). Valide manualmente:
 | `styles.css` | tokens (tema claro/escuro), componentes, spinner, **papel timbrado + `@media print`**, cards telemedicina/aprofundar |
 | `app.js` | instrumentos `ADULT`/`CHILD`/`CAST`/`CATQ`, `compute()` + `catqScore()`, telas (inclui `screenResultCatq()`), `buildLetterhead()`/`buildLetterheadCatq()`, ajustes |
 | `og.html` → `assets/og-image.png` | fonte do card social; regenerar (screenshot 1200×630) quando a copy mudar |
+| `ciencia.html` (rota `/ciencia`) | página de **fundamentação científica** (documento p/ IDASAM); OG próprio: `og-ciencia.html` → `assets/og-ciencia.png` |
 
 ## Fluxo de estado (resumo)
 
